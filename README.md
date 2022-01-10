@@ -1,3 +1,5 @@
+[![.NET](https://github.com/aimenux/SerilogLoggingLevelSwitchDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/aimenux/SerilogLoggingLevelSwitchDemo/actions/workflows/ci.yml)
+
 # SerilogLoggingLevelSwitchDemo
 ```
 Using LoggingLevelSwitch in order to change the serilog level in the fly
@@ -10,6 +12,6 @@ In this demo, i m using a nice serilog feature [LoggingLevelSwitch](https://nblu
 > :writing_hand: This feature can be used either when serilog is configured with fluent api or via json file section (set ConfigType to either Fluent or Json in appsettings.json).
 >
 
-> ![SerilogLoggingLevelSwitchDemo](Screenshots/SerilogLoggingLevelSwitchDemo.png)
+![SerilogLoggingLevelSwitchDemo](Screenshots/SerilogLoggingLevelSwitchDemo.png)
 
 **`Tools`** : vs22, net 6.0, serilog
