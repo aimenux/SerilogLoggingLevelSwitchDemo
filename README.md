@@ -2,7 +2,7 @@
 
 # SerilogLoggingLevelSwitchDemo
 ```
-Using LoggingLevelSwitch in order to change the serilog level in the fly
+Using LoggingLevelSwitch in order to dynamically change the serilog level
 ```
 
 In this demo, i m using a nice serilog feature [LoggingLevelSwitch](https://nblumhardt.com/2014/10/dynamically-changing-the-serilog-level/) in order to change the serilog level in the fly.
