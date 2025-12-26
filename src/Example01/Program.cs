@@ -1,10 +1,10 @@
-﻿using App.Extensions;
-using App.Services;
+﻿using Example01.Extensions;
+using Example01.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog.Events;
 
-namespace App;
+namespace Example01;
 
 public static class Program
 {

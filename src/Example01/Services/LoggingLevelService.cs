@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace App.Services;
+namespace Example01.Services;
 
 public interface ILoggingLevelService
 {

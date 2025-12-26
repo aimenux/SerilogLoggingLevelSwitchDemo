@@ -1,4 +1,4 @@
-﻿namespace App.Extensions;
+﻿namespace Example01.Extensions;
 
 public static class ConsoleColorExtensions
 {

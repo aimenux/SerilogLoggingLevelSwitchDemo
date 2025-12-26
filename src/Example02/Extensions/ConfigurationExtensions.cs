@@ -1,7 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
-using Serilog.Events;
+﻿using Serilog.Events;
 
-namespace App.Extensions;
+namespace Example02.Extensions;
 
 public static class ConfigurationExtensions
 {

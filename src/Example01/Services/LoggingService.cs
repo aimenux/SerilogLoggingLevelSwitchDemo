@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace App.Services;
+namespace Example01.Services;
 
 public interface ILoggingService
 {

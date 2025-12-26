@@ -1,14 +1,12 @@
-﻿using App.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+﻿using Example02.Services;
 using Serilog;
 using Serilog.Debugging;
 
-namespace App.Extensions;
+namespace Example02.Extensions;
 
 public static class SerilogExtensions
 {
-    public static IHostBuilder UseSerilog(this IHostBuilder builder)
+    public static IHostBuilder ConfigureSerilog(this IHostBuilder builder)
     {
         return builder.UseSerilog((hostingContext, serviceProvider, loggerConfiguration) =>
         {

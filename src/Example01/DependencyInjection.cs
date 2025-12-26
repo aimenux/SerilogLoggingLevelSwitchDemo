@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
-using App.Extensions;
-using App.Services;
+using Example01.Extensions;
+using Example01.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog.Core;
 
-namespace App;
+namespace Example01;
 
 public static class DependencyInjection
 {
@@ -24,12 +24,7 @@ public static class DependencyInjection
                 services.AddTransient<ILoggingLevelService, LoggingLevelService>();
                 services.AddSingleton<LoggingLevelSwitch>(_ => new LoggingLevelSwitch());
             })
-            .ConfigureLogging((_, loggingBuilder) =>
-            {
-                loggingBuilder.AddLogging();
-            })
-            .UseSerilog()
-            .UseConsoleLifetime();
+            .ConfigureSerilog();
     }
     
     private static string GetDirectoryPath()
