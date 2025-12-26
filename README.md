@@ -9,9 +9,6 @@ In this demo, i m using a nice serilog feature [LoggingLevelSwitch](https://nblu
 >
 > :writing_hand: This feature may be useful when we want to have more detailed logs in some places of our code based on some runtime behaviour (condition, exception, etc).
 >
-> :writing_hand: This feature can be used either when serilog is configured with fluent api or via json file section (set ConfigType to either Fluent or Json in appsettings.json).
->
-
-![SerilogLoggingLevelSwitchDemo](Screenshots/SerilogLoggingLevelSwitchDemo.png)
+> ![SerilogLoggingLevelSwitchDemo](Screenshots/SerilogLoggingLevelSwitchDemo.png)
 
 **`Tools`** : net 10.0, serilog
