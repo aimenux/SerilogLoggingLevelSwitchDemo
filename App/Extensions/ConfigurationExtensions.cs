@@ -5,23 +5,26 @@ namespace App.Extensions;
 
 public static class ConfigurationExtensions
 {
-    public static string GetConfigType(this IConfiguration configuration)
+    extension(IConfiguration configuration)
     {
-        return configuration["ConfigType"];
-    }
+        public string GetConfigType()
+        {
+            return configuration["ConfigType"] ?? throw new ArgumentNullException(nameof(configuration));
+        }
 
-    public static string GetOutputTemplate(this IConfiguration configuration)
-    {
-        return configuration["Serilog:WriteTo:0:Args:outputTemplate"];
-    }
+        public string GetOutputTemplate()
+        {
+            return configuration["Serilog:WriteTo:0:Args:outputTemplate"] ?? throw new ArgumentNullException(nameof(configuration));
+        }
 
-    public static string GetFilePath(this IConfiguration configuration)
-    {
-        return configuration["Serilog:WriteTo:1:Args:path"];
-    }
+        public string GetFilePath()
+        {
+            return configuration["Serilog:WriteTo:1:Args:path"] ?? throw new ArgumentNullException(nameof(configuration));
+        }
 
-    public static LogEventLevel GetDefaultLogLevel(this IConfiguration configuration)
-    {
-        return configuration.GetValue<LogEventLevel>("Serilog:MinimumLevel:Default");
+        public LogEventLevel GetDefaultLogLevel()
+        {
+            return configuration.GetValue<LogEventLevel>("Serilog:MinimumLevel:Default");
+        }
     }
 }

@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using App.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Debugging;
 
 namespace App.Extensions;
 
-public static class HostBuilderExtensions
+public static class SerilogExtensions
 {
     public static IHostBuilder UseSerilog(this IHostBuilder builder)
     {
@@ -13,46 +14,44 @@ public static class HostBuilderExtensions
         {
             SelfLog.Enable(Console.Error);
 
-            var switcher = serviceProvider.GetRequiredService<ILoggingLevelSwitcher>();
-            switcher.SetMinimumLevelFromConfiguration();
-
+            var loggingLevelService = serviceProvider.GetRequiredService<ILoggingLevelService>();
+            var defaultLogLevel = hostingContext.Configuration.GetDefaultLogLevel();
+            loggingLevelService.SetMinimumLevel(defaultLogLevel);
+            
             var inputConfigType = hostingContext.Configuration.GetConfigType();
             var configType = ToConfigType(inputConfigType);
             switch (configType)
             {
-                case ConfigType.Json:
+                case ConfigType.FileBased:
                     loggerConfiguration
                         .ReadFrom.Configuration(hostingContext.Configuration)
-                        .MinimumLevel.ControlledBy(switcher.LevelSwitch);
+                        .MinimumLevel.ControlledBy(loggingLevelService.LevelSwitch);
                         
                     break;
-                case ConfigType.Fluent:
+                case ConfigType.CodeBased:
                     var filePath = hostingContext.Configuration.GetFilePath();
                     var outputTemplate = hostingContext.Configuration.GetOutputTemplate();
                     loggerConfiguration
                         .WriteTo.Console(outputTemplate: outputTemplate)
                         .WriteTo.File(filePath, rollingInterval: RollingInterval.Day)
-                        .MinimumLevel.ControlledBy(switcher.LevelSwitch);
+                        .MinimumLevel.ControlledBy(loggingLevelService.LevelSwitch);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(inputConfigType);
             }
         });
     }
-
+    
     private static ConfigType ToConfigType(string configType)
     {
-        if (Enum.TryParse<ConfigType>(configType, true, out var type))
-        {
-            return type;
-        }
-
-        throw new ArgumentException($"Invalid config type {configType}");
+        return Enum.TryParse<ConfigType>(configType, true, out var type) 
+            ? type 
+            : throw new ArgumentException($"Invalid config type {configType}");
     }
 
-    public enum ConfigType
+    private enum ConfigType
     {
-        Json,
-        Fluent
+        FileBased,    // Configuration from settings file
+        CodeBased     // Configuration defined in C# code
     }
 }

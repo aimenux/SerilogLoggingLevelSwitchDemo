@@ -1,41 +1,41 @@
 ﻿using App.Extensions;
-using Microsoft.Extensions.Configuration;
+using App.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog.Events;
 
 namespace App;
 
 public static class Program
 {
-    public static async Task Main(string[] args)
+    public static void Main(string[] args)
     {
-        using var host = CreateHostBuilder(args).Build();
-        var service = host.Services.GetRequiredService<IDummyService>();
-        await service.RunAsync();
+        using var host = Host.CreateDefaultBuilder(args)
+            .AddServices()
+            .Build();
+        
+        var loggingService = host.Services.GetRequiredService<ILoggingService>();
+        
+        var loggingLevelService = host.Services.GetRequiredService<ILoggingLevelService>();
+        
+        var logLevels = new[]
+        {
+            LogEventLevel.Verbose,
+            LogEventLevel.Debug,
+            LogEventLevel.Information,
+            LogEventLevel.Warning,
+            LogEventLevel.Error,
+            LogEventLevel.Fatal
+        };
+        
+        foreach (var level in logLevels)
+        {
+            ConsoleColor.Blue.WriteLine($"Set minimum level to {level}");
+            loggingLevelService.SetMinimumLevel(level);
+            loggingService.LogToAllLevels($"LoggingLevelSwitch >= {level}");
+        }
 
-        Console.WriteLine("Press any key to exit !");
+        ConsoleColor.Yellow.WriteLine("Press any key to exit !");
         Console.ReadKey();
     }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((_, config) =>
-            {
-                config.AddJsonFile();
-                config.AddEnvironmentVariables();
-                config.AddCommandLine(args);
-            })
-            .ConfigureLogging((hostingContext, loggingBuilder) =>
-            {
-                loggingBuilder.ClearProviders();
-                loggingBuilder.AddNonGenericLogger();
-            })
-            .ConfigureServices((_, services) =>
-            {
-                services.AddTransient<IDummyService, DummyService>();
-                services.AddSingleton<ILoggingLevelSwitcher, LoggingLevelSwitcher>();
-            })
-            .UseSerilog()
-            .UseConsoleLifetime();
 }

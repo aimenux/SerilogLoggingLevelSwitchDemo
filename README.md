@@ -14,4 +14,4 @@ In this demo, i m using a nice serilog feature [LoggingLevelSwitch](https://nblu
 
 ![SerilogLoggingLevelSwitchDemo](Screenshots/SerilogLoggingLevelSwitchDemo.png)
 
-**`Tools`** : vs22, net 6.0, serilog
+**`Tools`** : net 10.0, serilog
