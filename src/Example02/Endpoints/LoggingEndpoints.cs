@@ -49,9 +49,7 @@ public static class LoggingEndpoints
     private static IResult LogToAllLogLevels(ILoggingLevelService loggingLevelService, ILoggingService loggingService)
     {
         var minLevel = loggingLevelService.GetMinimumLevel().ToString();
-        
         loggingService.LogToAllLevels($"LoggingLevelSwitch >= {minLevel}");
-    
         return Results.Ok();
     }
     
